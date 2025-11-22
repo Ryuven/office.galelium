@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinite CSS Carousel</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .carousel-container {
+            width: 100%;
+            margin: 0;
+            padding: 30px 0;
+        }
+
+        .partners-carousel {
+            width: 100%;
+            overflow: hidden;
+            background: white;
+            padding: 15px 0;
+        }
+
+        .partners-track {
+            display: flex;
+            width: max-content;
+            animation: scroll-infinite 25s linear infinite;
+        }
+
+        .logo-item {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 140px;
+            height: 60px;
+            padding: 0 20px;
+        }
+
+        .logo-item img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .logo-item:hover img {
+            filter: grayscale(0%);
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        /* Бесконечная анимация без пауз */
+        @keyframes scroll-infinite {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .logo-item {
+                width: 120px;
+                height: 50px;
+                padding: 0 15px;
+            }
+            
+            .partners-carousel {
+                padding: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel-container">
+        <div class="partners-carousel">
+            <div class="partners-track">
+                <!-- Первый набор логотипов -->
+                <div class="logo-item">
+                    <img src="images/carousel_logo_1.png" alt="Логотип 1">
+                </div>
+                <div class="logo-item">
+                    <img src="images/carousel_logo_2.png" alt="Логотип 2">
+                </div>
+                <div class="logo-item">
+                    <img src="images/carousel_logo_3.png" alt="Логотип 3">
+                </div>
+                <div class="logo-item">
+                    <img src="images/carousel_logo_4.png" alt="Логотип 4">
+                </div>
+                <div class="logo-item">
+                    <img src="images/carousel_logo_5.png" alt="Логотип 5">
+                </div>
+                
+                <!-- Дублированный набор для бесшовности -->
+                <div class="logo-item">
+                    <img src="images/carousel_logo_1.png" alt="Логотип 1">
+                </div>
+                <div class="logo-item">
+                    <img src="images/carousel_logo_2.png" alt="Логотип 2">
+                </div>
+                <div class="logo-item">
+                    <img src="images/carousel_logo_3.png" alt="Логотип 3">
+                </div>
+                <div class="logo-item">
+                    <img src="images/carousel_logo_4.png" alt="Логотип 4">
+                </div>
+                <div class="logo-item">
+                    <img src="images/carousel_logo_5.png" alt="Логотип 5">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
