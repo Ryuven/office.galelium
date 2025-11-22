@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доступ ограничен</title>
+    <style>
+        :root {
+            --primary-color: #1a1a2e;
+            --secondary-color: #16213e;
+            --accent-color: #e74c3c;
+            --accent-dark: #c0392b;
+            --text-primary: #ecf0f1;
+            --text-secondary: #bdc3c7;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: min(90%, 480px);
+            padding: clamp(2rem, 5vw, 3rem);
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .error-header {
+            margin-bottom: 2rem;
+        }
+
+        .error-code {
+            font-size: clamp(4rem, 15vw, 6rem);
+            font-weight: 700;
+            color: var(--accent-color);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+        }
+
+        .error-title {
+            font-size: clamp(1.5rem, 4vw, 1.75rem);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.4s forwards;
+        }
+
+        .error-message {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.6s forwards;
+        }
+
+        .security-details {
+            background: rgba(0, 0, 0, 0.25);
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin: 2rem 0;
+            border-left: 4px solid var(--accent-color);
+            text-align: left;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.8s forwards;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .detail-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-icon {
+            color: var(--accent-color);
+            font-weight: 600;
+            min-width: 1.2rem;
+        }
+
+        .action-buttons {
+            display: grid;
+            gap: 1rem;
+            margin-top: 2rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 1s forwards;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 2px solid var(--glass-border);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-dark);
+        }
+
+        .btn-secondary:hover {
+            background: var(--glass-bg);
+            color: var(--text-primary);
+            border-color: var(--accent-color);
+        }
+
+        .timestamp {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 2rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 1.2s forwards;
+        }
+
+        /* Анимированный фон */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        /* Анимации */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        /* Оптимизации */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
+
+        /* Темная тема по умолчанию */
+        @media (prefers-color-scheme: light) {
+            :root {
+                --primary-color: #0f0f1a;
+                --secondary-color: #1a1a2e;
+                --text-primary: #ecf0f1;
+                --text-secondary: #bdc3c7;
+                --glass-bg: rgba(0, 0, 0, 0.1);
+                --glass-border: rgba(255, 255, 255, 0.08);
+            }
+        }
+
+        /* Очень маленькие экраны */
+        @media (max-width: 360px) {
+            .container {
+                padding: 1.5rem;
+                border-radius: 16px;
+            }
+            
+            .security-details {
+                padding: 1rem;
+            }
+            
+            .btn {
+                padding: 0.875rem 1.5rem;
+            }
+        }
+
+        /* Планшеты и выше */
+        @media (min-width: 768px) {
+            .action-buttons {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background" id="background"></div>
+
+    <div class="container">
+        <div class="error-header">
+            <div class="error-code">403</div>
+            <h1 class="error-title">Доступ ограничен</h1>
+        </div>
+
+        <p class="error-message">
+            У вас недостаточно прав для просмотра этого ресурса. 
+            Обратитесь к администратору системы для получения доступа.
+        </p>
+
+        <div class="security-details">
+            <div class="detail-item">
+                <span class="detail-icon">•</span>
+                <span>Уровень доступа: ограниченный</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-icon">•</span>
+                <span>Требуется авторизация</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-icon">•</span>
+                <span>Событие зафиксировано</span>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <a href="https://galelium.com" class="btn btn-primary">На главную</a>
+            <a href="mailto:info@galelium.com" class="btn btn-secondary">Поддержка</a>
+        </div>
+
+        <div class="timestamp" id="timestamp"></div>
+    </div>
+
+    <script>
+        // Создание частиц фона
+        function createParticles() {
+            const background = document.getElementById('background');
+            const particleCount = Math.min(8, Math.floor(window.innerWidth / 100));
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 100 + 50;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                background.appendChild(particle);
+            }
+        }
+
+        // Установка времени события
+        function setTimestamp() {
+            const now = new Date();
+            const timestamp = document.getElementById('timestamp');
+            timestamp.textContent = `Событие зафиксировано: ${now.toLocaleString('ru-RU')}`;
+        }
+
+        // Инициализация анимаций
+        function initAnimations() {
+            const elements = document.querySelectorAll('[class*="error-"], .security-details, .action-buttons, .timestamp');
+            elements.forEach(el => {
+                el.style.transform = 'translateY(20px)';
+            });
+        }
+
+        // Загрузка страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            setTimestamp();
+            initAnimations();
+            
+            // Оптимизация для медленных устройств
+            if ('connection' in navigator && navigator.connection.saveData) {
+                document.querySelector('.background').style.display = 'none';
+            }
+        });
+
+        // Адаптация к изменению размера окна
+        let resizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                document.getElementById('background').innerHTML = '';
+                createParticles();
+            }, 250);
+        });
+    </script>
+</body>
+</html>
