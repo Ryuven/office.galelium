@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verified - Galelium Office</title>
+    <style>
+        :root {
+            --primary-color: #8a2be2;
+            --primary-dark: #6a1b9a;
+            --primary-light: #b388ff;
+            --bg-dark: #0a0a0a;
+            --bg-darker: #050505;
+            --bg-light: #1a1a1a;
+            --text-light: #ffffff;
+            --text-muted: #a0a0a0;
+            --text-dark: #666666;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: var(--text-muted);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: min(92%, 460px);
+            padding: 2.5rem;
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.95), rgba(10, 10, 10, 0.98));
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(138, 43, 226, 0.03) 0%, 
+                transparent 30%,
+                transparent 70%,
+                rgba(179, 136, 255, 0.02) 100%);
+            border-radius: 20px;
+            pointer-events: none;
+        }
+
+        .success-icon {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            position: relative;
+        }
+
+        .success-icon::before {
+            content: "✓";
+            font-size: 2rem;
+            color: white;
+            font-weight: 300;
+        }
+
+        .success-icon::after {
+            content: "";
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border: 1px solid var(--primary-light);
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .message {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .user-info {
+            background: rgba(30, 30, 30, 0.6);
+            padding: 1.25rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .user-email {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--primary-light);
+            word-break: break-all;
+        }
+
+        .benefits {
+            text-align: left;
+            margin: 2rem 0;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding: 0.5rem 0;
+        }
+
+        .benefit-icon {
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .benefit-icon::before {
+            content: "✓";
+            font-size: 0.7rem;
+            color: white;
+            font-weight: 600;
+        }
+
+        .benefit-text {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .benefit-description {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.875rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            box-shadow: 0 8px 20px rgba(138, 43, 226, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(138, 43, 226, 0.05);
+            color: var(--text-light);
+            border-color: var(--primary-light);
+        }
+
+        .corporate-footer {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            color: var(--text-dark);
+        }
+
+        /* Оптимизированные анимации */
+        @media (prefers-reduced-motion: no-preference) {
+            .container {
+                animation: fadeInUp 0.6s ease-out;
+            }
+            
+            .success-icon {
+                animation: scaleIn 0.5s ease-out 0.2s both;
+            }
+            
+            .benefit-item {
+                animation: slideInRight 0.5s ease-out both;
+            }
+            
+            .benefit-item:nth-child(1) { animation-delay: 0.3s; }
+            .benefit-item:nth-child(2) { animation-delay: 0.4s; }
+            .benefit-item:nth-child(3) { animation-delay: 0.5s; }
+            
+            .action-buttons {
+                animation: fadeIn 0.5s ease-out 0.6s both;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 480px) {
+            .container {
+                padding: 2rem 1.5rem;
+                border-radius: 16px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .user-info {
+                padding: 1rem;
+            }
+            
+            .btn {
+                padding: 0.75rem 1.25rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .action-buttons {
+                flex-direction: row;
+            }
+            
+            .btn {
+                flex: 1;
+            }
+        }
+
+        /* Отключение анимаций для пользователей, которые их предпочитают не использовать */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon"></div>
+        
+        <h1>Email Verified Successfully</h1>
+        
+        <p class="message">
+            Your email address has been successfully verified. 
+            You now have full access to the Galelium Office platform.
+        </p>
+
+        <div class="user-info">
+            <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+                Verified Email:
+            </div>
+            <div class="user-email" id="userEmail">user@galelium.com</div>
+        </div>
+
+        <div class="benefits">
+            <div class="benefit-item">
+                <div class="benefit-icon"></div>
+                <div>
+                    <div class="benefit-text">Full Platform Access</div>
+                    <div class="benefit-description">All features now available</div>
+                </div>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-icon"></div>
+                <div>
+                    <div class="benefit-text">Enhanced Security</div>
+                    <div class="benefit-description">Account protected with verified email</div>
+                </div>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-icon"></div>
+                <div>
+                    <div class="benefit-text">Priority Support</div>
+                    <div class="benefit-description">Expedited assistance when needed</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <a href="dashboard.html" class="btn btn-primary">
+                <i class="fas fa-arrow-right"></i>
+                Continue to Dashboard
+            </a>
+            <a href="https://galelium.com" class="btn btn-secondary">
+                <i class="fas fa-external-link-alt"></i>
+                Galelium Corporate
+            </a>
+        </div>
+
+        <div class="corporate-footer">
+            Galelium Corporation &copy; 2024. All rights reserved.
+        </div>
+    </div>
+
+    <script>
+        // Упрощенная инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            // Получаем email из URL параметров
+            const urlParams = new URLSearchParams(window.location.search);
+            const userEmail = urlParams.get('email') || 'user@galelium.com';
+            document.getElementById('userEmail').textContent = userEmail;
+            
+            // Предзагрузка критических ресурсов
+            const links = document.querySelectorAll('a[href]');
+            links.forEach(link => {
+                link.addEventListener('mouseenter', function() {
+                    if (this.href) {
+                        const prefetchLink = document.createElement('link');
+                        prefetchLink.rel = 'prefetch';
+                        prefetchLink.href = this.href;
+                        document.head.appendChild(prefetchLink);
+                    }
+                });
+            });
+        });
+
+        // Оптимизация производительности при скролле
+        let ticking = false;
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                requestAnimationFrame(function() {
+                    // Логика, связанная со скроллом, если нужна
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
+    </script>
+
+    <!-- Font Awesome для иконок -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </noscript>
+</body>
+</html>
